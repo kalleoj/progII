@@ -3,7 +3,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Array;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Arrays;
 
@@ -108,16 +107,21 @@ public class BlackJack {
 		player = new Hand();
 		dealer = new Hand();
 
+		Card card;
 		// give player and dealer cards that are flipped
 		for (Hand hand : new Hand[]{player, dealer}) {
 			for ( int i = 0; i < CARDS_IN_HAND; i++ ) {
-				Card card = deck.drawCard();
+				if (deck.cardsLeft() == 0) {
+					return;
+				}
+
+				card = deck.drawCard();
 				hand.addCard(card);
 			}
 		}
 
 		// unflip first card in dealers hand
-		dealer.getCard(0).flipCard();
+		dealer.getCard(CARDS_IN_HAND-1).flipCard();
 	}
 	
 	/**
@@ -240,7 +244,7 @@ public class BlackJack {
 	 */
 	public boolean makeDealerTurn() {
 
-		dealer.getCard(0).turnUp(); // lezz giddit
+		dealer.getCard(CARDS_IN_HAND-1).turnUp(); // lezz giddit
 
 		System.out.println("Dealer's turn!");
 		displayHand(dealer, true);
@@ -253,7 +257,7 @@ public class BlackJack {
 			displayHand(dealer, true);
 		}
 
-		if (checkHandValue(dealer) < TARGET_VALUE) {
+		if (checkHandValue(dealer) <= TARGET_VALUE) {
 			return true;
 		}
 		
@@ -313,8 +317,6 @@ public class BlackJack {
 		if (playerWins()) {
 			return true;
 		}
-
 		return false;
 	}
-	
 }

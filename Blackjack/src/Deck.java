@@ -22,8 +22,6 @@ public class Deck {
 				cards.add(new Card(v, suit));
 			}
 		}
-		
-		
 	}
 	
 	/**
