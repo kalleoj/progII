@@ -33,6 +33,15 @@ public class Mountaineer {
 	 */
 	public void moveToCell(Cell cell) {
 
+		int elevation = location.getElevation();
+		int newElevation = cell.getElevation();
+
+		elevationChange += newElevation-elevation;
+
+		location = cell;
+
+
+
 	}
 	
 	/**

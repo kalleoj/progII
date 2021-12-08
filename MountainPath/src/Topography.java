@@ -100,7 +100,16 @@ public class Topography {
 	 * if outside the borders of the map
 	 */	
 	public Cell getCell(int row, int col) {
-		
+
+		if (row>rows || row<0) {
+
+		}else if (col>cols || col<0) {
+
+			Cell cell = map[row][col];
+			return cell;
+		}
+
+
 		return null;
 	}
 	
@@ -140,8 +149,44 @@ public class Topography {
 	 * 
 	 */
 	public int[] getNeighbouringElevations(int row, int col) {
-		
-		return null;
+
+		int [] arr = new arr [3];
+
+		int rowNE = row +1;
+		int colNE = col-1;
+
+		int rowE = row + 1;
+		int colE = col;
+
+		int rowSE = row +1;
+		int colSE = col +1;
+
+		Cell cellE = getCell(rowE, colE);
+
+		Cell cellNE = getCell(rowNE, colNE);
+
+		Cell cellSE = getCell(rowSE, colSE);
+
+
+		if (cellNE == null) {
+			arr[0] = OUTSIDE_BORDERS;
+
+		} else {
+			arr[0]= cellNE;
+		}
+		if (cellE = null) {
+			arr[1] = OUTSIDE_BORDERS;
+		}else {
+			arr[1]= cellE;
+		}
+
+		if (cellSE == null) {
+			arr[2] = OUTSIDE_BORDERS;
+		}else {
+			arr[2]=cellSE ;
+		}
+
+		return arr;
 	}
 	
 	/**
@@ -153,7 +198,22 @@ public class Topography {
 	 * @return The cell in column 0 which has the lowest elevation
 	 */
 	public Cell findLowestStartingPoint() {
+
+		Cell cell = map[row][0];
+		int smallestRow = 0;
+		int smallestElevation = Integer.MAX_VALUE;
+
+
+		for (row == 0; row<rows; row++) {
+			if(cell.getElevation()<smallestElevation) {
+				smallestElevation = cell.getElevation();
+				smallestRow = row;
+			}
+
+		}
+
+
 		
-		return null;
+		return map[smallestRow][0];
 	}
 }
