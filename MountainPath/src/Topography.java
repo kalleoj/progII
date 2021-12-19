@@ -74,8 +74,7 @@ public class Topography {
 				
 			}
 			reader.close();
-			
-			
+
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -95,53 +94,86 @@ public class Topography {
 	 * 
 	 * @param row the row of the Cell to get
 	 * @param col the column of the Cell to get
-	 * 
+	 *
 	 * @return the Cell at indices row and col, or null
 	 * if outside the borders of the map
 	 */	
 	public Cell getCell(int row, int col) {
-		
-		return null;
+		if ( row >= rows || col >= cols || row < 0 || col < 0 ) {
+			return null;
+		}
+		return map[row][col];
 	}
 	
-	/** 
+	/**
 	 * TODO: implement the method
-	 * 
+	 *
 	 * If the mountaineer is in cell m, with neighbouring
 	 * cells a, b, c, as follows:
-	 * 
+	 *
 	 *     a
-	 *   / 
+	 *   /
 	 * m - b
 	 *   \
 	 *     c
-	 *   
-	 * then this method should return an integer array arr with 
+	 *
+	 * then this method should return an integer array arr with
 	 * values set like this
-	 * 
+	 *
 	 * arr[0] = elevation of cell a
 	 * arr[1] = elevation of cell b
 	 * arr[2] = elevation of cell c
-	 * 
+	 *
 	 * NOTE: Should any of the cells a, b, or c not exist
 	 * (because they are outside the borders of the map), then
 	 * the value stored at the corresponding array index should
 	 * be set to the value of the constant OUTSIDE_BORDERS.
-	 * 
+	 *
 	 * @param row the origin row of the Cell from where to scan
 	 * @param col the origin column of the Cell from where to scan
-	 * 
-	 * @return an integer array of length 3. The value at index 0 
+	 *
+	 * @return an integer array of length 3. The value at index 0
 	 * should be equal to the elevation of the cell to NE. The value
 	 * at index 1 should be equal to the elevation of the cell to E.
 	 * The value at index 2 should be equal to the elevation of the
 	 * cell to SE. If any of these cells do not exist, the corresponding
 	 * values in the return array should be equal to OUTSIDE_BORDERS.
-	 * 
+	 *
 	 */
 	public int[] getNeighbouringElevations(int row, int col) {
-		
-		return null;
+		// row, col, rows, cols, map, OUTSIDE_BORDERS
+		int[] arr = new int[3];
+
+		// What are the coordinates?
+		int rowE = row;
+		int colE = col + 1;
+
+		int rowNE = row - 1;
+		int colNE = col + 1;
+
+		int rowSE = row + 1;
+		int colSE = col + 1;
+
+		// Get the cells
+		Cell cellE = getCell(rowE, colE);
+		Cell cellNE = getCell(rowNE, colNE);
+		Cell cellSE = getCell(rowSE, colSE);
+
+		int i = 0;
+		//System.out.println("Scanning neighbours");
+		for (Cell cell : new Cell[]{cellNE, cellE, cellSE}) {
+			if (cell == null) {
+				arr[i] = OUTSIDE_BORDERS;
+			} else {
+				arr[i] = cell.getElevation();
+			}
+
+			i++;
+			//System.out.println("	" + cell);
+		}
+
+
+		return arr;
 	}
 	
 	/**
@@ -153,7 +185,24 @@ public class Topography {
 	 * @return The cell in column 0 which has the lowest elevation
 	 */
 	public Cell findLowestStartingPoint() {
-		
-		return null;
+		// cols, rows, map, OUTSIDE_BORDERS
+
+		int smallestValue = Integer.MAX_VALUE;
+		int smallestRow = 0;
+
+		for (int row = 0; row < rows; row++) { // #forforloops
+			Cell cell = map[row][0];
+
+			if (cell != null && cell.getElevation() < smallestValue) {
+				smallestValue = cell.getElevation();
+				smallestRow = row;
+			}
+		}
+
+		return map[smallestRow][0];
+	}
+
+	public Cell [][] getMap() {
+		return map;
 	}
 }
