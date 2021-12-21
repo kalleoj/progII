@@ -14,7 +14,7 @@ public class Mountaineer {
 	
 	/**
 	 * Sets the starting location of the mountaineer.
-	 * @param c the starting location of the mountaineer
+	 * @param cell the starting location of the mountaineer
 	 */
 	public void setStartingPoisition(Cell cell) {
 		location = cell;
@@ -29,11 +29,15 @@ public class Mountaineer {
 	 * method should also update the elevationChange according to the task
 	 * description
 	 * 
-	 * @param c the cell the mountaineer is moving to
+	 * @param cell the cell the mountaineer is moving to
 	 */
 	public void moveToCell(Cell cell) {
+		if (cell == null) {
+			return;
+		}
 
 		int elevation = location.getElevation();
+<<<<<<< HEAD
 		int newElevation = cell.getElevation();
 
 		elevationChange += newElevation-elevation;
@@ -42,6 +46,11 @@ public class Mountaineer {
 
 
 
+=======
+		elevationChange += Math.abs(cell.getElevation() - elevation);
+
+		location = cell;
+>>>>>>> 019e5ef863f1a913df4edcd418e432ed8e17360e
 	}
 	
 	/**
